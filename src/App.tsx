@@ -1,15 +1,18 @@
-import Header from "./main/Header";
-import Sidebar from "./main/sidebar/Sidebar";
+import { Route, Routes } from "react-router";
+import Layout from "./main/sidebar/Layout";
+import NotFound from "./main/NotFound";
+
+//TODO - lazy load pages
 
 export default function App() {
   return (
-    <div className="bg-green-50 h-screen flex flex-col">
-      <div className="flex-none z-10">
-        <Header />
-      </div>
-      <div className="flex-grow">
-        <Sidebar />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<div>Home</div>} />
+        <Route path="program-builder" element={<div>Program builder</div>} />
+        <Route path="client-settings" element={<div>Client settings</div>} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
