@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import PrimaryButton from "../common/components/PrimaryButton";
+import PrimaryButton from "../../common/components/PrimaryButton"; //TODO - absolute paths?
 
 export default function NotFound() {
   return (
