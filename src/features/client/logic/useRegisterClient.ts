@@ -11,7 +11,7 @@ export default function useRegisterClient() {
   const navigate = useNavigate();
   const { setClientId } = useClientContext();
 
-  const { mutate } = useMutation({
+  const { mutate, status } = useMutation({
     mutationFn: (input: ClientInput) => clientService.createClient(input),
     onSuccess: (result) => {
       setClientId(result?.id);
@@ -28,5 +28,10 @@ export default function useRegisterClient() {
 
   const canRegister = formState.isDirty && formState.isValid;
 
-  return { handleSubmitForm, control, canRegister };
+  return {
+    handleSubmitForm,
+    control,
+    canRegister,
+    loading: status === "pending",
+  };
 }

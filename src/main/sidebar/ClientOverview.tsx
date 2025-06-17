@@ -35,7 +35,7 @@ export default function ClientOverview() {
           </p>
         </div>
       </div>
-      <Link to={routes.clientSelection}>
+      <Link to={routes.clientPortal}>
         <PrimaryButton>Switch client</PrimaryButton>
       </Link>
     </div>

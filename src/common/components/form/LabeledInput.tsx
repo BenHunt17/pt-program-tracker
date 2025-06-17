@@ -9,7 +9,7 @@ export default function LabelledInput({
   error,
 }: LabelledInputProps) {
   return (
-    <div className="relative">
+    <div className="w-full relative">
       <p className="text-on-background">
         {label} {isRequired && "*"}
       </p>

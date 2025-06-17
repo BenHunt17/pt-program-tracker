@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import useClientContext from "../../../../main/clientContext/useClientContext";
-import { clientService } from "../../data/clientService";
-import { localStorageKeys } from "../../../../common/constants/localStorageKeys";
+import useClientContext from "../../../main/clientContext/useClientContext";
+import { clientService } from "../data/clientService";
+import { localStorageKeys } from "../../../common/constants/localStorageKeys";
 import { Link, useNavigate } from "react-router";
-import { routes } from "../../../../common/constants/routes";
-import PrimaryButton from "../../../../common/components/PrimaryButton";
-import FilterSelect from "../../../../common/components/FilterSelect";
-import RegisterClientForm from "./RegisterClientForm";
+import { routes } from "../../../common/constants/routes";
+import PrimaryButton from "../../../common/components/PrimaryButton";
+import FilterSelect from "../../../common/components/FilterSelect";
 
 export default function ClientSelection() {
   const { clientId, setClientId } = useClientContext();
@@ -49,10 +48,9 @@ export default function ClientSelection() {
         options={clients}
         labelFn={(option) => `${option.firstName} ${option.lastName}`}
       />
-      <Link to="/register-client">
+      <Link to={routes.registerClient}>
         <PrimaryButton>Register new client</PrimaryButton>
       </Link>
-      <RegisterClientForm />
     </div>
   );
 }

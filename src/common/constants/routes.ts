@@ -1,6 +1,7 @@
 export const routes = {
   root: "/",
-  programBuilder: "program-builder",
-  clientSettings: "client-settings",
-  clientSelection: "client-selection",
+  programBuilder: "p/rogram-builder",
+  clientSettings: "/client-settings",
+  clientPortal: "/client-portal",
+  registerClient: "/register-client",
 };

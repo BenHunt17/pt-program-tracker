@@ -1,7 +1,9 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import PrimaryButton from "../../common/components/PrimaryButton"; //TODO - absolute paths?
 
 export default function NotFound() {
+  const navigate = useNavigate();
+
   return (
     <div className="h-screen bg-background flex flex-col justify-center items-center gap-16">
       <div className="flex flex-col items-center">
@@ -10,9 +12,7 @@ export default function NotFound() {
           {"Page not found :("}
         </h3>
       </div>
-      <Link to="/">
-        <PrimaryButton>Go back</PrimaryButton>
-      </Link>
+      <PrimaryButton onClick={() => navigate(-1)}>Go back</PrimaryButton>
     </div>
   );
 }

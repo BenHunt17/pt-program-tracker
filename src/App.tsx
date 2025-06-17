@@ -1,12 +1,16 @@
 import { Route, Routes, useNavigate } from "react-router";
-import Layout from "./main/sidebar/Layout";
-import NotFound from "./main/fallbacks/NotFound";
 import { routes } from "./common/constants/routes";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import useClientContext from "./main/clientContext/useClientContext";
-import ClientSelection from "./features/client/view/clientSelection/ClientSelection";
 
-//TODO - lazy load pages
+const Layout = lazy(() => import("./main/Layout"));
+const SplashScreen = lazy(() => import("./main/fallbacks/SplashScreen"));
+const NotFound = lazy(() => import("./main/fallbacks/NotFound"));
+
+const ClientPortal = lazy(() => import("./features/client/view/ClientPortal"));
+const RegisterClient = lazy(
+  () => import("./features/client/view/RegisterClient")
+);
 
 export default function App() {
   const navigate = useNavigate();
@@ -15,25 +19,32 @@ export default function App() {
 
   useEffect(() => {
     if (clientId === undefined) {
-      navigate(routes.clientSelection);
+      navigate(routes.clientPortal);
     }
   }, [clientId, navigate]);
 
+  if (clientId === undefined) {
+    return <SplashScreen />;
+  }
+
   return (
-    <Routes>
-      <Route path={routes.root} element={<Layout />}>
-        <Route index element={<div>Home</div>} />
-        <Route
-          path={routes.programBuilder}
-          element={<div>Program builder</div>}
-        />
-        <Route
-          path={routes.clientSettings}
-          element={<div>Client settings</div>}
-        />
-      </Route>
-      <Route path={routes.clientSelection} element={<ClientSelection />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense fallback={<SplashScreen />}>
+      <Routes>
+        <Route path={routes.root} element={<Layout />}>
+          <Route index element={<div>Home</div>} />
+          <Route
+            path={routes.programBuilder}
+            element={<div>Program builder</div>}
+          />
+          <Route
+            path={routes.clientSettings}
+            element={<div>Client settings</div>}
+          />
+        </Route>
+        <Route path={routes.clientPortal} element={<ClientPortal />} />
+        <Route path={routes.registerClient} element={<RegisterClient />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 }
