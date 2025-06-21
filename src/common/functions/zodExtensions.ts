@@ -5,10 +5,8 @@ export function requiredText() {
 }
 
 export function requiredNumber(options?: { min?: number; max?: number }) {
-  return requiredText().pipe(
-    z.coerce
-      .number()
-      .min(options?.min ?? -Infinity)
-      .max(options?.max ?? Infinity)
-  );
+  return z.coerce
+    .number()
+    .min(options?.min ?? -Infinity)
+    .max(options?.max ?? Infinity);
 }

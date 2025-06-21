@@ -1,22 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import PrimaryButton from "../../common/components/PrimaryButton";
-import { clientService } from "../../features/client/data/clientService";
 import useClientContext from "../clientContext/useClientContext";
 import { Link } from "react-router";
 import { routes } from "../../common/constants/routes";
 
 export default function ClientOverview() {
-  const { clientId } = useClientContext();
-
-  const { data: client } = useQuery({
-    queryKey: ["client", clientId],
-    queryFn: () => {
-      if (clientId) {
-        return clientService.getClient(clientId);
-      }
-    },
-    enabled: clientId !== undefined,
-  });
+  const { client } = useClientContext();
 
   return (
     <div className="flex justify-between py-8 px-4 gap-16 border-y-2 border-secondary">

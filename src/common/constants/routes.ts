@@ -3,5 +3,4 @@ export const routes = {
   programBuilder: "p/rogram-builder",
   clientSettings: "/client-settings",
   clientPortal: "/client-portal",
-  registerClient: "/register-client",
 };

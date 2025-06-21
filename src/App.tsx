@@ -7,23 +7,25 @@ const Layout = lazy(() => import("./main/Layout"));
 const SplashScreen = lazy(() => import("./main/fallbacks/SplashScreen"));
 const NotFound = lazy(() => import("./main/fallbacks/NotFound"));
 
-const ClientPortal = lazy(() => import("./features/client/view/ClientPortal"));
-const RegisterClient = lazy(
-  () => import("./features/client/view/RegisterClient")
+const ClientPortal = lazy(
+  () => import("./features/client/presentation/ClientPortal")
+);
+const ClientSettings = lazy(
+  () => import("./features/client/presentation/ClientSettings")
 );
 
 export default function App() {
   const navigate = useNavigate();
 
-  const { clientId } = useClientContext();
+  const { clientId, loading } = useClientContext();
 
   useEffect(() => {
-    if (clientId === undefined) {
+    if (clientId === undefined && !loading) {
       navigate(routes.clientPortal);
     }
-  }, [clientId, navigate]);
+  }, [clientId, loading, navigate]);
 
-  if (clientId === undefined) {
+  if (loading) {
     return <SplashScreen />;
   }
 
@@ -36,13 +38,9 @@ export default function App() {
             path={routes.programBuilder}
             element={<div>Program builder</div>}
           />
-          <Route
-            path={routes.clientSettings}
-            element={<div>Client settings</div>}
-          />
+          <Route path={routes.clientSettings} element={<ClientSettings />} />
         </Route>
         <Route path={routes.clientPortal} element={<ClientPortal />} />
-        <Route path={routes.registerClient} element={<RegisterClient />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

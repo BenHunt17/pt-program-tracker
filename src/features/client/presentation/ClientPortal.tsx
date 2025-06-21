@@ -1,36 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
 import useClientContext from "../../../main/clientContext/useClientContext";
-import { clientService } from "../data/clientService";
-import { localStorageKeys } from "../../../common/constants/localStorageKeys";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { routes } from "../../../common/constants/routes";
 import PrimaryButton from "../../../common/components/PrimaryButton";
 import FilterSelect from "../../../common/components/FilterSelect";
+import useClientsQuery from "../data/queries/useClientsQuery";
+import { useState } from "react";
+import RegisterClient from "./RegisterClient";
 
 export default function ClientSelection() {
-  const { clientId, setClientId } = useClientContext();
+  const { client, setClientId } = useClientContext();
+  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
 
   const navigate = useNavigate();
 
-  const { data } = useQuery({
-    queryKey: ["clients"],
-    queryFn: clientService.findAllClients,
-  });
-
-  const clients = data ?? [];
+  const { clients } = useClientsQuery();
 
   const handleChange = (clientId: number) => {
-    localStorage.setItem(
-      localStorageKeys.previouslySelectedClientId,
-      clientId.toString()
-    );
-
     setClientId(clientId);
 
     navigate(routes.root);
   };
 
-  const selectedClient = clients.find((x) => x.id === clientId);
+  const selectedClient = clients?.find((x) => x.id === client?.id);
 
   return (
     <div className="h-screen bg-background flex flex-col justify-center items-center gap-16">
@@ -45,12 +36,13 @@ export default function ClientSelection() {
       <FilterSelect
         value={selectedClient}
         onSelect={(client) => handleChange(client.id)}
-        options={clients}
-        labelFn={(option) => `${option.firstName} ${option.lastName}`}
+        options={clients ?? []}
+        labelFn={(option) => option.fullName}
       />
-      <Link to={routes.registerClient}>
-        <PrimaryButton>Register new client</PrimaryButton>
-      </Link>
+      <PrimaryButton onClick={() => setShowRegistrationForm(true)}>
+        Register new client
+      </PrimaryButton>
+      {showRegistrationForm && <RegisterClient />}
     </div>
   );
 }
