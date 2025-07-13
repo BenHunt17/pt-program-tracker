@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <div className="h-screen flex">
       <Sidebar />
-      <div className="bg-background flex-grow p-4">
+      <div className="bg-background flex-grow">
         <Outlet />
       </div>
     </div>

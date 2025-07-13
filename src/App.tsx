@@ -14,6 +14,10 @@ const ClientSettings = lazy(
   () => import("./features/client/presentation/ClientSettings")
 );
 
+const ProgramBuilder = lazy(
+  () => import("./features/program/presentation/ProgramBuilder")
+);
+
 export default function App() {
   const navigate = useNavigate();
 
@@ -34,10 +38,7 @@ export default function App() {
       <Routes>
         <Route path={routes.root} element={<Layout />}>
           <Route index element={<div>Home</div>} />
-          <Route
-            path={routes.programBuilder}
-            element={<div>Program builder</div>}
-          />
+          <Route path={routes.programBuilder} element={<ProgramBuilder />} />
           <Route path={routes.clientSettings} element={<ClientSettings />} />
         </Route>
         <Route path={routes.clientPortal} element={<ClientPortal />} />
