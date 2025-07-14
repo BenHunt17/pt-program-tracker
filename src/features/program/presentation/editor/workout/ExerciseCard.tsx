@@ -1,5 +1,5 @@
-import { cn } from "../../../../common/functions/classnames";
-import type { Exercise } from "../../data/types/exerciseSchema";
+import { cn } from "../../../../../common/functions/classnames";
+import type { Exercise } from "../../../data/types/exerciseSchema";
 
 interface ExerciseCardProps {
   exercise: Exercise;

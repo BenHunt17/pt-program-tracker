@@ -1,7 +1,8 @@
 import useProgramBuilderContext from "../../context/useProgramBuilderContext";
 import CreateProgramButton from "../CreateProgramButton";
 import BasicProgramInfo from "./BasicProgramInfo";
-import WorkoutCard from "./WorkoutCard";
+import CreateWorkoutButton from "./workout/CreateWorkoutButton";
+import WorkoutCard from "./workout/WorkoutCard";
 
 export default function ProgramEditor() {
   const { selectedProgram } = useProgramBuilderContext();
@@ -20,7 +21,10 @@ export default function ProgramEditor() {
       <BasicProgramInfo />
       {selectedProgram.workouts.length > 0 && (
         <div>
-          <h4 className="text-xl text-on-background font-bold">Workouts</h4>
+          <div className="flex justify-between">
+            <h4 className="text-xl text-on-background font-bold">Workouts</h4>
+            <CreateWorkoutButton />
+          </div>
           <div className="grid [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))] gap-4">
             {selectedProgram.workouts.map((workout) => (
               <WorkoutCard key={workout.id} workout={workout} />
